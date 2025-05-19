@@ -1,86 +1,142 @@
 ---
-// Component Imports
 import BaseHead from '../components/BaseHead.astro';
 import BlogHeader from '../components/BlogHeader.astro';
 import BlogPostPreview from '../components/BlogPostPreview.astro';
 import { SITE } from '../config';
 
-// Component Script:
-// You can write any JavaScript/TypeScript that you'd like here.
-// It will run during the build, but never in the browser.
-// All variables are available to use in the HTML template below.
 let { title } = SITE;
-let description = 'The perfect starter for your perfect blog.';
-let permalink = 'https://example.com/';
-
-// Data Fetching: List all Markdown posts in the repo.
+let description = 'Canada’s freshest pile of political fertilizer.';
+let permalink = 'https://nationalcompost.ca/';
 
 let allPosts = await Astro.glob('./posts/*.md');
 allPosts = allPosts.sort((a, b) => new Date(b.frontmatter.publishDate).valueOf() - new Date(a.frontmatter.publishDate).valueOf());
 
-// Full Astro Component Syntax:
-// https://docs.astro.build/core-concepts/astro-components/
+let featuredPost = allPosts[0];
+let remainingPosts = allPosts.slice(1, 6);
 ---
 
 <html lang="en">
-	<head>
-		<BaseHead {title} {description} {permalink} />
+  <head>
+    <BaseHead {title} {description} {permalink} />
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        background: #fff;
+        color: #222;
+        margin: 0;
+        padding: 0;
+      }
 
-		<style>
-			header {
-				width: 100%;
-				height: 100%;
-				background-color: var(--theme-bg-offset);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
+      .wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem;
+      }
 
-			.content {
-				margin-top: 4rem;
-				margin-bottom: 8rem;
-			}
+      .intro {
+        border-bottom: 4px solid #b30000;
+        padding-bottom: 1.5rem;
+        margin-bottom: 2rem;
+      }
 
-			.content :global(main > * + *) {
-				margin-top: 1rem;
-			}
+      .latest {
+        font-size: 2.8rem;
+        color: #b30000;
+        font-weight: 800;
+        margin: 0;
+      }
 
-			.intro {
-				padding-bottom: 4rem;
-				margin-bottom: 2rem;
-				border-bottom: 4px solid var(--theme-divider);
-			}
+      .grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+      }
 
-			.intro > * {
-				margin: 0;
-			}
+      .hero {
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 2rem;
+        margin-bottom: 2rem;
+      }
 
-			.latest {
-				font-size: 2.5rem;
-				font-weight: 700;
-			}
+      .hero img {
+        width: 100%;
+        height: auto;
+      }
 
-			footer {
-				text-align: center;
-			}
-		</style>
-	</head>
+      .hero h2 {
+        font-size: 2rem;
+        margin: 0.5rem 0;
+      }
 
-	<body>
-		<BlogHeader />
-		<div class="wrapper">
-			<main class="content">
-				<section class="intro">
-					<h1 class="latest">{title}</h1>
-					<p>{description}</p>
-				</section>
-				<section aria-label="Blog post list">
-					{allPosts.map((p) => <BlogPostPreview post={p} />)}
-				</section>
-			</main>
-			<footer>
-			<a href="/admin">Admin Dashboard 🔐</a>
-			</footer>
-		</div>
-	</body>
+      .sidebar h3 {
+        font-size: 1.2rem;
+        color: #b30000;
+        margin-bottom: 1rem;
+      }
+
+      .sidebar a {
+        text-decoration: none;
+        color: #222;
+        display: block;
+        margin-bottom: 1rem;
+        border-left: 4px solid transparent;
+        padding-left: 0.5rem;
+        transition: border-color 0.3s;
+      }
+
+      .sidebar a:hover {
+        border-left-color: #b30000;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid #ccc;
+        font-size: 0.875rem;
+      }
+    </style>
+  </head>
+  <body>
+    <BlogHeader />
+
+    <div class="wrapper">
+      <main>
+        <section class="intro">
+          <h1 class="latest">{title}</h1>
+          <p>{description}</p>
+        </section>
+
+        <div class="grid">
+          <!-- Main column -->
+          <div>
+            <div class="hero">
+              <a href={featuredPost.url}>
+                <img src={featuredPost.frontmatter.image} alt={featuredPost.frontmatter.title} />
+                <h2>{featuredPost.frontmatter.title}</h2>
+              </a>
+              <p>{featuredPost.frontmatter.description}</p>
+            </div>
+
+            <section aria-label="Main blog post list">
+              {remainingPosts.map((p) => <BlogPostPreview post={p} />)}
+            </section>
+          </div>
+
+          <!-- Sidebar -->
+          <aside class="sidebar">
+            <h3>Latest Headlines</h3>
+            {remainingPosts.map((p) => (
+              <a href={p.url}>{p.frontmatter.title}</a>
+            ))}
+          </aside>
+        </div>
+      </main>
+
+      <footer>
+        <p>National Compost is a work of satire and is not affiliated with the National Post or any other decomposing media outlet.</p>
+        <p><a href="/admin">Admin Dashboard 🔐</a></p>
+      </footer>
+    </div>
+  </body>
 </html>
