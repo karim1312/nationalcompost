@@ -1,0 +1,84 @@
+---
+// src/layouts/BaseLayout.astro
+import Header from '../components/Header.astro';
+const { title = "National Compost", description = "Canada’s freshest pile of political fertilizer." } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/src/styles/global.css" />
+  </head>
+  <body>
+    <header class="site-header">
+        <a href="/" class="site-title">National Compost</a>
+        <nav>
+          <ul class="nav">
+            <li><a href="/news">News</a></li>
+            <li><a href="/opinion">Opinion</a></li>
+            <li><a href="/satire">Satire</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </nav>
+    </header>
+      
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <p>
+        © {new Date().getFullYear()} <span>National Compost</span>. A parody publication not affiliated with any real compost or newspaper.
+      </p>
+    </footer>
+  </body>
+</html>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #ffffff;
+}
+
+.site-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #ffffff;
+  border-bottom: 3px solid var(--headline);
+  position: relative;
+  z-index: 10;
+}
+
+.site-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--headline);
+  text-decoration: none;
+}
+
+.nav {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav a:hover {
+  color: var(--headline);
+}
+</style>

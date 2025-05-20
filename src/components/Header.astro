@@ -1,0 +1,67 @@
+---
+// No dynamic imports for now
+---
+<header class="site-header">
+    <div class="top-bar">
+      <h1><a href="/">National Compost</a></h1>
+    </div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="/news">News</a></li>
+        <li><a href="/opinion">Opinion</a></li>
+        <li><a href="/satire">Satire</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <style>
+  .site-header {
+    background: #fff;
+    color: #111;
+    border-bottom: 2px solid #990000;
+    padding-bottom: 0.5rem;
+  }
+  
+  .top-bar {
+    text-align: center;
+    padding: 1rem 0 0.25rem;
+  }
+  
+  .top-bar h1 a {
+    font-family: 'Merriweather', serif;
+    font-size: 2.2rem;
+    color: #990000;
+    text-decoration: none;
+  }
+  
+  .main-nav {
+    background: #f9f9f9;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .main-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 0.75rem 0;
+    margin: 0;
+  }
+  
+  .main-nav li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    padding-bottom: 0.2rem;
+    border-bottom: 2px solid transparent;
+    transition: border 0.2s ease, color 0.2s ease;
+  }
+  
+  .main-nav li a:hover {
+    border-bottom: 2px solid #990000;
+    color: #990000;
+  }
+  </style>
+  

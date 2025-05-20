@@ -1,26 +1,23 @@
 ---
-const { title, publishDate, author = "The Compost Collective" } = Astro.props;
+const { title, publishDate, category } = Astro.props;
 ---
 
 <html lang="en">
   <head>
     <title>{title} | National Compost</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
   <body>
     <article>
       <header>
         <h1>{title}</h1>
-        <p><small>{publishDate} · {author}</small></p>
+        <p><em>{publishDate} · {category}</em></p>
       </header>
-
       <section>
         <slot />
       </section>
-
       <footer>
-        <p><a href="/">← Back to the compost bin</a></p>
+        <p><a href="/">← Back to homepage</a></p>
       </footer>
     </article>
   </body>
